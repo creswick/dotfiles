@@ -1,0 +1,38 @@
+-- OverloadedStrings is often useful.
+:set -XOverloadedStrings
+
+-- Scoped type variables is often useful so we can specify the types
+-- of variables (for example, in lambda expressions).
+:set -XScopedTypeVariables
+
+-- Used to colorize ghci output (you will need to cabal install funnyprint in a user or global package db)
+-- :set -package funnyprint
+-- :def color (\_ -> return (":set -interactive-print=FunnyPrint.funnyPrint\n:set prompt \"" ++ FunnyPrint.prompt "λ " "%s" " ¬\\nλ > " ++ "\"" ++ "\n:set prompt2 \"" ++ FunnyPrint.prompt2 "λ" "" " | " ++ "\""))
+
+-- Show the types of evaluated expressions
+:set +t
+
+-- And stats
+:set +s
+
+-- Enable multi-line expressions with :{ and :}
+:set +m
+
+-- Shortcut for listing the modules (:modules)
+:def modules (\_ -> return ":show modules")
+
+-- Make the prompt a little more colorful.
+-- And pretty-printing values
+
+:def verbose (\_ -> return ":set prompt \"\ESC[0;34m %s > \ESC[m\"\n:set prompt2 \"%s|\ESC[0;34m%l\ESC[1;34m λ \ESC[m\"")
+:def color (\_ -> return ":set prompt \"\ESC[0;34m%l\ESC[1;34m λ \ESC[m\"")
+:def nocolor (\_ -> return ":set prompt \"%l λ \"")
+
+
+-- turn fun on
+:color
+
+-- GHCI uses NoBuffering by default, but compiled programs use LineBuffering.
+-- This helps prevent output interleaving, and make things a bit more consistent.
+import System.IO
+hSetBuffering stdout LineBuffering
