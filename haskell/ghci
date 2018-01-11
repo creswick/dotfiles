@@ -34,5 +34,9 @@
 
 -- GHCI uses NoBuffering by default, but compiled programs use LineBuffering.
 -- This helps prevent output interleaving, and make things a bit more consistent.
+-- unfortunately, this frequently gets reset:
 import System.IO
 hSetBuffering stdout LineBuffering
+
+-- Import some basic things that I always tend to need:
+import qualified Data.Text as T
