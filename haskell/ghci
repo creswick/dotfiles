@@ -40,3 +40,4 @@ hSetBuffering stdout LineBuffering
 
 -- Import some basic things that I always tend to need:
 import qualified Data.Text as T
+import Text.Show.Pretty
