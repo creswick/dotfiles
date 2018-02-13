@@ -41,6 +41,7 @@ echo "Setting up emacs (see $DIR/emacs/init.el)"
 echo "The first time you start emacs it will install many things"
 mkdir -p "$HOME/.emacs.d"
 ln -s -f "$DIR/emacs/init.el" "$HOME/.emacs.d/init.el"
+ln -s -f "$DIR/emacs/custom.el" "$HOME/.emacs.d/custom.el"
 
 echo "Setting up tmux"
 ln -s -f "$DIR/tmux/tmux.conf" "$HOME/.tmux.conf"
