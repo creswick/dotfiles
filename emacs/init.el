@@ -2,7 +2,6 @@
 ;; Are we running XEmacs or Emacs?
 (defvar running-xemacs (string-match "XEmacs\\|Lucid" emacs-version))
 (setq load-path (cons "~/dotfiles/emacs/lisp" load-path))
-(setq load-path (cons "~/dotfiles/emacs/hlint-refactor-mode" load-path))
 
 (require 'package)
 (add-to-list 'package-archives
