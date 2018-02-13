@@ -26,9 +26,9 @@ cd "$HOME"
 #
 
 echo "Installing symlinks for bash"
-ln -s -f  "$DIR/bash_logout" "$HOME/.bash_logout"
-ln -s -f "$DIR/bashrc" "$HOME/.bashrc"
-ln -s -f "$DIR/profile" "$HOME/.profile"
+ln -s -f  "$DIR/bash/bash_logout" "$HOME/.bash_logout"
+ln -s -f "$DIR/bash/bashrc" "$HOME/.bashrc"
+ln -s -f "$DIR/bash/profile" "$HOME/.profile"
 
 echo "Installing 'protectSSH.sh' in $HOME/bin"
 mkdir -p "$HOME/bin"
