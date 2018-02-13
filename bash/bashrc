@@ -211,6 +211,6 @@ set_symmetric_difference() {
 SLURM_MEM_PER_MODE=12000
 
 # List the tmux sessions, so we know what's running:
-if tmux info; then
+if tmux info &> /dev/null; then
     tmux ls
 fi
