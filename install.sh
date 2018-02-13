@@ -51,6 +51,5 @@ echo "Log out/in to see the changes"
 echo "(or source ~/.bashrc if you're daring)"
 echo ""
 echo ""
-echo ""
-echo thingsToKnow.txt
+cat thingsToKnow.txt
 
