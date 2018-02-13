@@ -1,0 +1,18 @@
+Things to know:
+
+- You should run `sudo projectSSH.sh` after each
+  reboot to keep the OOM killer from hosing your ssh session.
+
+- The Tmux prefix key is Ctrl-o
+
+- Emacs is configured with Agda-mode for .hs files.
+  (So some keysequences generate unicode.)
+
+- Emacs also is using flymake with hlint
+
+- Your prompt shows:
+  |username on hostname @ theTime pwd (git branch)|
+  <input area>
+
+- Non-zero exit status will also be echoed in red.
+
