@@ -1,3 +1,4 @@
+# -*- mode: sh;-*-
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -210,4 +211,6 @@ set_symmetric_difference() {
 SLURM_MEM_PER_MODE=12000
 
 # List the tmux sessions, so we know what's running:
-tmux ls
+if ps -ef | grep --quiet -i tmux; then
+    tmux ls
+fi
