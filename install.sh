@@ -39,6 +39,10 @@ ln -s -f "$DIR/haskell/ghci" "$HOME/.ghci"
 
 echo "Setting up emacs (see $DIR/emacs/init.el)"
 echo "The first time you start emacs it will install many things"
+cd $DIR
+git submodule init
+git submodule update --recursive --remote
+
 mkdir -p "$HOME/.emacs.d"
 ln -s -f "$DIR/emacs/init.el" "$HOME/.emacs.d/init.el"
 ln -s -f "$DIR/emacs/custom.el" "$HOME/.emacs.d/custom.el"
