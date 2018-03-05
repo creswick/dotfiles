@@ -3,6 +3,10 @@
 (defvar running-xemacs (string-match "XEmacs\\|Lucid" emacs-version))
 (setq load-path (cons "~/dotfiles/emacs/lisp" load-path))
 
+;; Put auto-save files in your home directory.
+(setq backup-directory-alist
+      `(("." . ,(concat user-emacs-directory "backups"))))
+
 (require 'package)
 (add-to-list 'package-archives
 	     '("melpa-stable" . "http://stable.melpa.org/packages/") t)
@@ -86,6 +90,7 @@
 ;; C-c , r - Apply the suggestion under the cursor
 ;; C-c , b - Apply all suggestions in the buffer
 (require 'hlint-refactor)
+(add-hook 'haskell-mode-hook 'hlint-refactor-mode)
 
 (projectile-global-mode)
 (setq projectile-completion-system 'helm)
