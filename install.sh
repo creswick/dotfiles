@@ -46,6 +46,10 @@ ln -s -f "$DIR/emacs/custom.el" "$HOME/.emacs.d/custom.el"
 echo "Setting up tmux"
 ln -s -f "$DIR/tmux/tmux.conf" "$HOME/.tmux.conf"
 
+echo "Installing symlinks for git"
+ln -s -f "$DIR/git/gitconfig" "$HOME/.gitconfig"
+ln -s -f "$DIR/git/gitignore" "$HOME/.gitignore"
+
 echo "Done!"
 echo ""
 echo "Log out/in to see the changes"

@@ -86,6 +86,9 @@
 (require 'flymake-hlint)
 (add-hook 'haskell-mode-hook 'flymake-hlint-load)
 
+;; recompile:
+(global-set-key (kbd "<f12>") 'recompile)
+
 ;; hlint refactor keybindings:
 ;; C-c , r - Apply the suggestion under the cursor
 ;; C-c , b - Apply all suggestions in the buffer
