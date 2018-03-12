@@ -1,5 +1,5 @@
 -- OverloadedStrings is often useful.
-:set -XOverloadedStrings
+-- :set -XOverloadedStrings
 
 -- Scoped type variables is often useful so we can specify the types
 -- of variables (for example, in lambda expressions).

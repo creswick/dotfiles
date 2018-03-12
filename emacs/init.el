@@ -86,8 +86,21 @@
 (require 'flymake-hlint)
 (add-hook 'haskell-mode-hook 'flymake-hlint-load)
 
+
+;; compilation:
+(defun compile-project ()
+  (interactive)
+  (let ((default-directory
+          (if (or (string= (file-name-extension buffer-file-name) "hs")
+                  (string= (file-name-extension buffer-file-name) "cabal"))
+              ;; then find a stack.yaml:
+              (locate-dominating-file buffer-file-name "stack.yaml")
+            default-directory))))
+  (call-interactively #'compile))
+
 ;; recompile:
 (global-set-key (kbd "<f12>") 'recompile)
+(global-set-key (kbd "\C-c b") 'recompile)
 
 ;; hlint refactor keybindings:
 ;; C-c , r - Apply the suggestion under the cursor
