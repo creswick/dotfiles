@@ -81,7 +81,8 @@ sjobCount () {
 # To see a count of your currently running jobs, e.g.:
 #  |5| > _
 jobCountPrompt () {
-    count=`sjobCount`
+    #    count=`sjobCount`
+    count="0"
     pfx=$1
     sfx=$2
     if [ "$count" == "0" ]; then

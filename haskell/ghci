@@ -28,6 +28,8 @@
 :def color (\_ -> return ":set prompt \"\ESC[0;34m%l\ESC[1;34m λ \ESC[m\"")
 :def nocolor (\_ -> return ":set prompt \"%l λ \"")
 
+-- Hoogle integration:
+:def hoogle \x -> return $ ":!hoogle " ++ x'
 
 -- turn fun on
 :color
