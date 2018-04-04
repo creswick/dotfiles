@@ -29,7 +29,7 @@
 :def nocolor (\_ -> return ":set prompt \"%l λ \"")
 
 -- Hoogle integration:
-:def hoogle \x -> return $ ":!hoogle " ++ x'
+:def hoogle \x -> return $ ":!hoogle " ++ x
 
 -- turn fun on
 :color
@@ -43,3 +43,13 @@ hSetBuffering stdout LineBuffering
 -- Import some basic things that I always tend to need:
 import qualified Data.Text as T
 import Text.Show.Pretty
+import System.IO
+
+-- save :: Show a => a -> IO ()
+let save value = do
+      hPutStr stderr "Filename: "
+      path <- hGetLine stdin
+      writeFile path (show value)
+
+:def store \_ -> return (":set -interactive-print=save")
+:def stopStore \_ -> return (":set -interactive-print=print")
