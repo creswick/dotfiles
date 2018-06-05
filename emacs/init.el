@@ -54,6 +54,9 @@
 (require 'cl)
 (require 'uniquify)
 
+;; Line numbers:
+(setq linum-format "%3d\u2502")
+
 (defun erc/packages-installed-p ()
   (loop for pkg in erc/packages
 	when (not (package-installed-p pkg)) do (return nil)

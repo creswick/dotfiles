@@ -31,6 +31,12 @@
 -- Hoogle integration:
 :def hoogle \x -> return $ ":!hoogle " ++ x
 
+-- :set -package funnyprint
+
+-- :def colorPrint (\_ -> return (":set -interactive-print=FunnyPrint.funnyPrintC)
+-- :def nocolorPrint (\_ -> return ":set -interactive-print=print)
+-- :colorPrint
+
 -- turn fun on
 :color
 
@@ -42,14 +48,24 @@ hSetBuffering stdout LineBuffering
 
 -- Import some basic things that I always tend to need:
 import qualified Data.Text as T
-import Text.Show.Pretty
-import System.IO
+import           Text.Show.Pretty
+import           System.IO
+
+import qualified Data.Map.Strict as Map
+import           Data.Map.Strict (Map)
+import qualified Data.Sequence as Seq
+import qualified Data.Set as Set
+import           Data.Set (Set)
+
+import           Lens.Family2
 
 -- save :: Show a => a -> IO ()
-let save value = do
-      hPutStr stderr "Filename: "
-      path <- hGetLine stdin
-      writeFile path (show value)
+-- let save value = do
+--      hPutStr stderr "Filename: "
+--      path <- hGetLine stdin
+--      writeFile path (show value)
 
-:def store \_ -> return (":set -interactive-print=save")
+-- :def store \_ -> return (":set -interactive-print=save")
+
+:def store \_ -> return (":{\nlet save value = do { hPutStr stderr \"Filename: \"; path <- hGetLine stdin; writeFile path (show value);}\n:}\n:set -interactive-print=save")
 :def stopStore \_ -> return (":set -interactive-print=print")

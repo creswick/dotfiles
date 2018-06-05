@@ -37,6 +37,9 @@ ln -s -f "$DIR/bin/protectSSH.sh" "$HOME/bin/protectSSH.sh"
 echo "Installing .ghci"
 ln -s -f "$DIR/haskell/ghci" "$HOME/.ghci"
 
+echo "Installing .hspec"
+ln -s -f "$DIR/haskell/hspec" "$HOME/.hspec"
+
 echo "Setting up emacs (see $DIR/emacs/init.el)"
 echo "The first time you start emacs it will install many things"
 mkdir -p "$HOME/.emacs.d"
