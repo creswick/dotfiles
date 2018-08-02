@@ -59,6 +59,9 @@ import           Data.Set (Set)
 
 import           Lens.Family2
 
+import           System.Environment (withArgs)
+import           Test.Hspec.QuickCheck
+
 -- save :: Show a => a -> IO ()
 -- let save value = do
 --      hPutStr stderr "Filename: "
@@ -69,3 +72,7 @@ import           Lens.Family2
 
 :def store \_ -> return (":{\nlet save value = do { hPutStr stderr \"Filename: \"; path <- hGetLine stdin; writeFile path (show value);}\n:}\n:set -interactive-print=save")
 :def stopStore \_ -> return (":set -interactive-print=print")
+
+
+-- Doesn't work because 'main' is not in scope when defining the def.
+-- :def runTest \tname -> withArgs ["-m", tname] main

@@ -42,6 +42,7 @@
      helm-ag
      ag
      dumb-jump
+     transpose-frame
      ;; Writing
      typo
      auctex
