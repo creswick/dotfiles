@@ -28,3 +28,4 @@ PATH=$HOME/.cabal/bin:$PATH
 if [ -f "$HOME/.local_profile" ]; then
     . "$HOME/.local_profile"
 fi
+
