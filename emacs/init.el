@@ -88,8 +88,30 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 
 (require 'flymake-hlint)
+(require 'haskell-interactive-mode)
+(require 'haskell-process)
+(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 (add-hook 'haskell-mode-hook 'flymake-hlint-load)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(haskell-align-imports-pad-after-name t)
+ '(haskell-ask-also-kill-buffers nil)
+ '(haskell-import-mapping nil)
+ '(haskell-mode-hook
+   (quote
+    (flyspell-prog-mode highlight-uses-mode interactive-haskell-mode projectile-mode flymake-hlint-load turn-on-haskell-doc-mode haskell-indentation-mode)))
+ '(haskell-process-path-ghci "/home/rogan/Groq/Haskell/runGhci.sh")
+ '(haskell-process-prompt-restart-on-cabal-change nil)
+ '(haskell-process-type (quote ghci))
+ '(haskell-compile-cabal-build-command "time /nix/var/nix/profiles/default/bin/bake build -Levt")
+ '(haskell-compile-command "time /nix/var/nix/profiles/default/bin/bake build -Levt")
+ )
 
+;; (with-eval-after-load 'haskell-mode-hook
+;;   (define-key haskell-mode-map (kbd "<f8>") 'haskell-navigate-imports))
 
 ;; compilation:
 (defun compile-project ()
@@ -105,6 +127,9 @@
 ;; recompile:
 (global-set-key (kbd "<f12>") 'recompile)
 (global-set-key (kbd "\C-c b") 'recompile)
+(global-set-key (kbd "\C-c \C-c") 'haskell-compile)
+
+(global-set-key (kbd "<f8>") 'haskell-navigate-imports)
 
 ;; hlint refactor keybindings:
 ;; C-c , r - Apply the suggestion under the cursor
@@ -338,3 +363,9 @@
 (put 'downcase-region 'disabled nil)
 
 (global-set-key (kbd "C-M-d") 'backward-kill-word)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
