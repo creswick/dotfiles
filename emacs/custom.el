@@ -8,7 +8,7 @@
  '(inhibit-startup-screen t)
  '(inhibit-startup-buffer-menu t)
  '(inhibit-startup-echo-area-message "rogan")
- '(package-selected-packages (quote (magit haskell-mode)))
+; '(package-selected-packages (quote (magit haskell-mode)))
  '(paren-match-face (quote paren-face-match-light))
  '(paren-sexp-mode t)
  '(reb-re-syntax (quote string))

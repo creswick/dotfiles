@@ -4,6 +4,7 @@
 -- Scoped type variables is often useful so we can specify the types
 -- of variables (for example, in lambda expressions).
 :set -XScopedTypeVariables
+:set -XMultiWayIf
 
 -- Used to colorize ghci output (you will need to cabal install funnyprint in a user or global package db)
 -- :set -package funnyprint
@@ -76,3 +77,17 @@ import           Test.Hspec.QuickCheck
 
 -- Doesn't work because 'main' is not in scope when defining the def.
 -- :def runTest \tname -> withArgs ["-m", tname] main
+
+:def find \str -> return (":! find . -name \"*.hs\" | xargs grep --color=always -n "++str)
+
+:def git \str -> return (":! git "++str)
+
+:{
+:def! save (\args ->
+  if | args == "--help" || args == "-h" -> do
+       putStrLn "Usage: `> :save <filename>`"
+       return ""
+     | otherwise ->
+       return (":{\nlet save value = appendFile "++show args++" (show value ++ \"\\n\")\n:}\n:set -interactive-print=save")
+)
+:}

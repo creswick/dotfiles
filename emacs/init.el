@@ -11,6 +11,7 @@
 (add-to-list 'package-archives
 	     '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 (package-initialize)
+(require 'subr-x)
 
 ;; Speed startup
 (setq inhibit-startup-message t)
@@ -18,7 +19,7 @@
 
 (defvar erc/packages
   '( flymake-hlint
-     magit
+;     magit
      clojure-mode
      go-mode
      haskell-mode
@@ -99,16 +100,21 @@
  ;; If there is more than one, they won't work right.
  '(haskell-align-imports-pad-after-name t)
  '(haskell-ask-also-kill-buffers nil)
+ '(haskell-compile-cabal-build-command "time /nix/var/nix/profiles/default/bin/bake build -Levt")
+ '(haskell-compile-command "time /nix/var/nix/profiles/default/bin/bake build -Levt")
  '(haskell-import-mapping nil)
  '(haskell-mode-hook
    (quote
-    (flyspell-prog-mode highlight-uses-mode interactive-haskell-mode projectile-mode flymake-hlint-load turn-on-haskell-doc-mode haskell-indentation-mode)))
+    ((lambda nil
+       (set-input-method
+        (quote Agda)))
+     hlint-refactor-mode projectile-mode flymake-hlint-load turn-on-haskell-doc-mode haskell-indentation-mode)))
  '(haskell-process-path-ghci "/home/rogan/Groq/Haskell/runGhci.sh")
  '(haskell-process-prompt-restart-on-cabal-change nil)
  '(haskell-process-type (quote ghci))
- '(haskell-compile-cabal-build-command "time /nix/var/nix/profiles/default/bin/bake build -Levt")
- '(haskell-compile-command "time /nix/var/nix/profiles/default/bin/bake build -Levt")
- )
+ '(package-selected-packages
+   (quote
+    (yaml-mode web-mode use-package undo-tree typo transpose-frame smart-mode-line rust-mode markdown-mode lua-mode jsx-mode js2-mode htmlize helm-projectile helm-company helm-ag go-mode gitignore-mode gitconfig-mode flymake-hlint edit-server dumb-jump dante clojure-mode auctex ag))))
 
 ;; (with-eval-after-load 'haskell-mode-hook
 ;;   (define-key haskell-mode-map (kbd "<f8>") 'haskell-navigate-imports))
@@ -195,8 +201,8 @@
 ;; ------------------------------------------------------------
 ;; Magit
 
-(setq magit-last-seen-setup-instructions "1.4.0")
-(global-set-key (kbd "\C-xm") 'magit-status)
+;(setq magit-last-seen-setup-instructions "1.4.0")
+;(global-set-key (kbd "\C-xm") 'magit-status)
 
 ;; ------------------------------------------------------------
 ;; Highlight things
