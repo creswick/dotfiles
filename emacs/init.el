@@ -23,6 +23,7 @@
      clojure-mode
      go-mode
      haskell-mode
+     json-mode
      js2-mode
      jsx-mode
      web-mode
@@ -127,7 +128,7 @@
  '(haskell-process-type (quote ghci))
  '(package-selected-packages
    (quote
-    (yaml-mode web-mode use-package undo-tree typo transpose-frame smart-mode-line rust-mode markdown-mode lua-mode jsx-mode js2-mode htmlize helm-projectile helm-company helm-ag go-mode gitignore-mode gitconfig-mode flymake-hlint edit-server dumb-jump dante clojure-mode auctex ag))))
+    (json-mode yaml-mode web-mode use-package undo-tree typo transpose-frame smart-mode-line rust-mode markdown-mode lua-mode jsx-mode js2-mode htmlize helm-projectile helm-company helm-ag go-mode gitignore-mode gitconfig-mode flymake-hlint edit-server dumb-jump dante clojure-mode auctex ag))))
 
 ;; (with-eval-after-load 'haskell-mode-hook
 ;;   (define-key haskell-mode-map (kbd "<f8>") 'haskell-navigate-imports))
@@ -204,6 +205,9 @@
 ;; all of its wonderful features!!
 (add-hook 'latex-mode-hook 'turn-on-reftex)
 (setq auto-mode-alist (cons '("\\.tex" . latex-mode) auto-mode-alist))
+
+;; Load Jex files with json-mode:
+(setq auto-mode-alist (cons '("\\.jex" . json-mode) auto-mode-alist))
 
 ;; ------------------------------------------------------------
 ;; Agda
