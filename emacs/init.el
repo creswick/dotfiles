@@ -11,6 +11,7 @@
 (add-to-list 'package-archives
 	     '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 (package-initialize)
+(require 'subr-x)
 
 ;; Speed startup
 (setq inhibit-startup-message t)
@@ -18,10 +19,11 @@
 
 (defvar erc/packages
   '( flymake-hlint
-     magit
+;     magit
      clojure-mode
      go-mode
      haskell-mode
+     json-mode
      js2-mode
      jsx-mode
      web-mode
@@ -76,6 +78,19 @@
 ;; More expressive undo
 (global-undo-tree-mode)
 
+;; Handy util to delete things
+(defun delete-file-and-buffer ()
+  "Kill the current buffer and deletes the file it is visiting."
+  (interactive)
+  (let ((filename (buffer-file-name)))
+    (when filename
+      ;; (if (vc-backend filename)
+      ;;     (vc-delete-file filename)
+        (progn
+          (delete-file filename)
+          (message "Deleted file %s" filename)
+          (kill-buffer))))) ;)
+
 ;; ------------------------------------------------------------
 ;; Haskell
 
@@ -88,8 +103,35 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 
 (require 'flymake-hlint)
+(require 'haskell-interactive-mode)
+(require 'haskell-process)
+(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 (add-hook 'haskell-mode-hook 'flymake-hlint-load)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(haskell-align-imports-pad-after-name t)
+ '(haskell-ask-also-kill-buffers nil)
+ '(haskell-compile-cabal-build-command "time /nix/var/nix/profiles/default/bin/bake build -Levt")
+ '(haskell-compile-command "time /nix/var/nix/profiles/default/bin/bake build -Levt")
+ '(haskell-import-mapping nil)
+ '(haskell-mode-hook
+   (quote
+    ((lambda nil
+       (set-input-method
+        (quote Agda)))
+     hlint-refactor-mode projectile-mode flymake-hlint-load turn-on-haskell-doc-mode haskell-indentation-mode)))
+ '(haskell-process-path-ghci "/home/rogan/Groq/Haskell/runGhci.sh")
+ '(haskell-process-prompt-restart-on-cabal-change nil)
+ '(haskell-process-type (quote ghci))
+ '(package-selected-packages
+   (quote
+    (json-mode yaml-mode web-mode use-package undo-tree typo transpose-frame smart-mode-line rust-mode markdown-mode lua-mode jsx-mode js2-mode htmlize helm-projectile helm-company helm-ag go-mode gitignore-mode gitconfig-mode flymake-hlint edit-server dumb-jump dante clojure-mode auctex ag))))
 
+;; (with-eval-after-load 'haskell-mode-hook
+;;   (define-key haskell-mode-map (kbd "<f8>") 'haskell-navigate-imports))
 
 ;; compilation:
 (defun compile-project ()
@@ -105,6 +147,9 @@
 ;; recompile:
 (global-set-key (kbd "<f12>") 'recompile)
 (global-set-key (kbd "\C-c b") 'recompile)
+(global-set-key (kbd "\C-c \C-c") 'haskell-compile)
+
+(global-set-key (kbd "<f8>") 'haskell-navigate-imports)
 
 ;; hlint refactor keybindings:
 ;; C-c , r - Apply the suggestion under the cursor
@@ -161,6 +206,9 @@
 (add-hook 'latex-mode-hook 'turn-on-reftex)
 (setq auto-mode-alist (cons '("\\.tex" . latex-mode) auto-mode-alist))
 
+;; Load Jex files with json-mode:
+(setq auto-mode-alist (cons '("\\.jex" . json-mode) auto-mode-alist))
+
 ;; ------------------------------------------------------------
 ;; Agda
 
@@ -170,8 +218,8 @@
 ;; ------------------------------------------------------------
 ;; Magit
 
-(setq magit-last-seen-setup-instructions "1.4.0")
-(global-set-key (kbd "\C-xm") 'magit-status)
+;(setq magit-last-seen-setup-instructions "1.4.0")
+;(global-set-key (kbd "\C-xm") 'magit-status)
 
 ;; ------------------------------------------------------------
 ;; Highlight things
@@ -338,3 +386,9 @@
 (put 'downcase-region 'disabled nil)
 
 (global-set-key (kbd "C-M-d") 'backward-kill-word)
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

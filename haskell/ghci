@@ -4,6 +4,7 @@
 -- Scoped type variables is often useful so we can specify the types
 -- of variables (for example, in lambda expressions).
 :set -XScopedTypeVariables
+:set -XMultiWayIf
 
 -- Used to colorize ghci output (you will need to cabal install funnyprint in a user or global package db)
 -- :set -package funnyprint
@@ -51,6 +52,7 @@ import qualified Data.Text as T
 import           Text.Show.Pretty
 import           System.IO
 
+import           GHC.IO.Handle
 import qualified Data.Map.Strict as Map
 import           Data.Map.Strict (Map)
 import qualified Data.Sequence as Seq
@@ -76,3 +78,71 @@ import           Test.Hspec.QuickCheck
 
 -- Doesn't work because 'main' is not in scope when defining the def.
 -- :def runTest \tname -> withArgs ["-m", tname] main
+
+:def find \str -> return (":! find . -name \"*.hs\" | xargs grep --color=always -n "++str)
+
+:def git \str -> return (":! git "++str)
+
+:{
+:def! save (\args ->
+  if | args == "--help" || args == "-h" -> do
+       putStrLn "Usage: `> :save <filename>`"
+       return ""
+     | otherwise ->
+       return (":{\nlet save value = appendFile "++show args++" (show value ++ \"\\n\")\n:}\n:set -interactive-print=save")
+)
+:}
+
+-------------------------------------------------------------------------------------------------
+-- things taken (and adapted) from:
+--   https://mail.haskell.org/pipermail/haskell-cafe/2007-September/032260.html
+-------------------------------------------------------------------------------------------------
+
+:{
+-- make commands helpful
+let { cmdHelp cmd msg "--help" = return $ "putStrLn "++show msg
+    ; cmdHelp cmd msg other    = cmd other }
+:}
+
+:def . cmdHelp readFile ":. <file>\t\t-- source commands from <file>"
+
+:{
+let redir varcmd =
+     case break Data.Char.isSpace varcmd of
+     { (var,_:cmd) -> return $ unlines
+        [":set -fno-print-bind-result"
+        , ":unset +t"
+        , ":unset +s"
+        , concat ["(stoh, f) <- do { tmp <- System.Directory.getTemporaryDirectory"
+                 ,"; (f,h) <- System.IO.openTempFile tmp \"ghci\""
+                 ,"; sto <- GHC.IO.Handle.hDuplicate System.IO.stdout"
+                 ,"; GHC.IO.Handle.hDuplicateTo h System.IO.stdout"
+                 ,"; System.IO.hClose h"
+                 ,"; return (sto, f) "
+                 ,"; }"
+                 ]
+        ,cmd
+        ,concat [var ++ "<- do { GHC.IO.Handle.hDuplicateTo stoh System.IO.stdout"
+                ,"; x <- readFile f >>= \\t->length t `seq` return t"
+                ,"; System.Directory.removeFile f"
+                ,"; return x"
+                ,"; }"
+                ]
+        , ":set +t"
+        , ":set +s"
+
+        ]
+      ; _ -> return "putStrLn \"usage: :redir <var> <cmd>\"" }
+:}
+
+:{
+:def redir cmdHelp redir
+  ":redir <var> <cmd>\t-- execute <cmd>, redirecting stdout to <var>"
+:}
+
+let { pwd _ = return "System.Directory.getCurrentDirectory >>= putStrLn" }
+:def pwd cmdHelp pwd ":pwd\t\t\t-- print working directory"
+
+let { ls p  = let { path = if (null p) then "." else p } in return $ "mapM_ putStrLn =<< System.Directory.getDirectoryContents "++show path }
+:def ls cmdHelp ls ":ls [<path>]\t\t-- list directory (\".\" by default)"
+

@@ -175,8 +175,8 @@ alias xargs='xargs '
 alias retag='hasktags -R -e --ignore-close-implementation . '
 
 # Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+#   sleep 10; pingMe
+alias pingMe='msg "Job done! Exited with $?."'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -220,3 +220,9 @@ if tmux info &> /dev/null; then
 fi
 
 export PATH="$HOME/.cargo/bin:$PATH"
+
+# If you have settings that are specific to certain machines, put them
+# in ~/.local_bashrc
+if [ -f "$HOME/.local_bashrc" ]; then
+    . "$HOME/.local_bashrc"
+fi
