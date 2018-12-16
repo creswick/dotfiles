@@ -218,3 +218,5 @@ SLURM_MEM_PER_MODE=12000
 if tmux info &> /dev/null; then
     tmux ls
 fi
+
+export PATH="$HOME/.cargo/bin:$PATH"
