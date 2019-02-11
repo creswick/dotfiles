@@ -9,7 +9,7 @@
 
 (require 'package)
 (add-to-list 'package-archives
-	     '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+	     '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
 (require 'subr-x)
 
@@ -44,7 +44,7 @@
      helm-ag
      ag
      dumb-jump
-     transpose-frame
+;     transpose-frame ; in lisp dir - doesn't appear in melpa ?
      ;; Writing
      typo
      auctex
@@ -74,6 +74,9 @@
 
 ;; Disable the useless menu bar
 (menu-bar-mode -1)
+
+;; Disable the tool bar.
+(tool-bar-mode nil)
 
 ;; More expressive undo
 (global-undo-tree-mode)
@@ -128,7 +131,7 @@
  '(haskell-process-type (quote ghci))
  '(package-selected-packages
    (quote
-    (json-mode yaml-mode web-mode use-package undo-tree typo transpose-frame smart-mode-line rust-mode markdown-mode lua-mode jsx-mode js2-mode htmlize helm-projectile helm-company helm-ag go-mode gitignore-mode gitconfig-mode flymake-hlint edit-server dumb-jump dante clojure-mode auctex ag))))
+    (json-mode yaml-mode web-mode use-package undo-tree typo smart-mode-line rust-mode markdown-mode lua-mode jsx-mode js2-mode htmlize helm-projectile helm-company helm-ag go-mode gitignore-mode gitconfig-mode flymake-hlint edit-server dumb-jump dante clojure-mode auctex ag))))
 
 ;; (with-eval-after-load 'haskell-mode-hook
 ;;   (define-key haskell-mode-map (kbd "<f8>") 'haskell-navigate-imports))
