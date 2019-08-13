@@ -29,3 +29,5 @@ if [ -f "$HOME/.local_profile" ]; then
     . "$HOME/.local_profile"
 fi
 
+
+export PATH="$HOME/.cargo/bin:$PATH"

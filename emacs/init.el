@@ -9,7 +9,7 @@
 
 (require 'package)
 (add-to-list 'package-archives
-	     '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+	     '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 (package-initialize)
 (require 'subr-x)
 
@@ -77,6 +77,9 @@
 
 ;; Disable the useless menu bar
 (menu-bar-mode -1)
+
+;; Disable the tool bar.
+(tool-bar-mode nil)
 
 ;; More expressive undo
 (global-undo-tree-mode)
