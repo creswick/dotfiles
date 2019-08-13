@@ -176,7 +176,7 @@ alias retag='hasktags -R -e --ignore-close-implementation . '
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; pingMe
-alias pingMe='msg "Job done! Exited with $?."'
+alias pingMe='slack rogan "Job done! Exited with $?."'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -224,3 +224,5 @@ fi
 if [ -f "$HOME/.local_bashrc" ]; then
     . "$HOME/.local_bashrc"
 fi
+
+eval `ssh-agent`

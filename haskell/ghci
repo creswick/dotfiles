@@ -3,8 +3,8 @@
 
 -- Scoped type variables is often useful so we can specify the types
 -- of variables (for example, in lambda expressions).
-:set -XScopedTypeVariables
-:set -XMultiWayIf
+:seti -XScopedTypeVariables
+:seti -XMultiWayIf
 
 -- Used to colorize ghci output (you will need to cabal install funnyprint in a user or global package db)
 -- :set -package funnyprint
@@ -48,6 +48,7 @@ import System.IO
 hSetBuffering stdout LineBuffering
 
 -- Import some basic things that I always tend to need:
+import           Data.String -- for fromString; helps when things expect OverloadedLists
 import qualified Data.Text as T
 import           Text.Show.Pretty
 import           System.IO
