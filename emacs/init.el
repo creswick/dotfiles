@@ -227,6 +227,14 @@
 ;(setq magit-last-seen-setup-instructions "1.4.0")
 ;(global-set-key (kbd "\C-xm") 'magit-status)
 
+
+;; Set the smerge prefix to C-c m (was C-c ^)
+;;
+;;   `C-c m m` <-- keep "my" change.
+;;   `C-c m n` <-- next change.
+;;   `C-c m <ret>` <-- keep version cursor is on.
+(setq smerge-command-prefix "\C-cm")
+
 ;; ------------------------------------------------------------
 ;; Highlight things
 (global-unset-key (kbd "M-h"))
