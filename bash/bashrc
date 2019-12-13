@@ -139,6 +139,9 @@ esac
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
 fi
+
+# list only directories:
+alias dirs='ls -1d -- */ '
 alias ls='ls --color=auto'
 #alias dir='dir --color=auto'
 #alias vdir='vdir --color=auto'
@@ -170,6 +173,10 @@ alias tree='tree -C -A '
 
 # Make xargs trigger subsequent aliases:
 alias xargs='xargs '
+
+# Alias to run one 'program' on each input, rather than xarg's normal
+# behavior:
+alias map='xargs -n 1 '
 
 # hask tags alias to generate an emacs TAGS file:
 alias retag='hasktags -R -e --ignore-close-implementation . '

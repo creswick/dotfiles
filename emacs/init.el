@@ -45,6 +45,7 @@
      ag
      dumb-jump
      transpose-frame
+     ace-window
 ;     avy
      ;; Writing
      typo
@@ -74,6 +75,9 @@
   (dolist (pkg erc/packages)
     (when (not (package-installed-p pkg))
             (package-install pkg))))
+
+;; ace-window:
+(global-set-key (kbd "M-o") 'ace-window)
 
 ;; Disable the useless menu bar
 (menu-bar-mode -1)
