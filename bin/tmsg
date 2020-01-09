@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# From Jon Purdy:
+# If you’re using tmux and iTerm, you can use this script to send
+# desktop notifications from a script on your devserver:
+#
+# It will not work from within mosh, unfortunately (not sure why); also,
+# if you want to adapt this to use a fancy control sequence for a different
+# terminal, you just need to place it between \033Ptmux; and \033\\ and
+# double up any \033 / \x1b s to escape them
+#
+#
+# Usage:
+#
+#  $ ./configure && make && make install ; tmsg "Job is done!"
+#
+
+message="$@"
+printf '\033Ptmux;\033\033]9;%s\007\033\\' "$message"
+
+# or '\x1bPtmux;\x1b\x1b]9;%s\x07\x1b\\' if you prefer
