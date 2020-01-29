@@ -44,14 +44,18 @@
      helm-ag
      ag
      dumb-jump
-;     transpose-frame ; in lisp dir - doesn't appear in melpa ?
+     transpose-frame
+     ace-window
+;     avy
      ;; Writing
      typo
      auctex
      ;; Other
      smart-mode-line
      undo-tree
-     edit-server)
+     edit-server
+     ;; nix
+     nix-mode)
   "A list of packages to ensure are installed at launch.")
 
 (require 'cl)
@@ -71,6 +75,9 @@
   (dolist (pkg erc/packages)
     (when (not (package-installed-p pkg))
             (package-install pkg))))
+
+;; ace-window:
+(global-set-key (kbd "M-o") 'ace-window)
 
 ;; Disable the useless menu bar
 (menu-bar-mode -1)
@@ -117,21 +124,16 @@
  ;; If there is more than one, they won't work right.
  '(haskell-align-imports-pad-after-name t)
  '(haskell-ask-also-kill-buffers nil)
- '(haskell-compile-cabal-build-command "time /nix/var/nix/profiles/default/bin/bake build -Levt")
- '(haskell-compile-command "time /nix/var/nix/profiles/default/bin/bake build -Levt")
  '(haskell-import-mapping nil)
  '(haskell-mode-hook
    (quote
-    ((lambda nil
-       (set-input-method
-        (quote Agda)))
-     hlint-refactor-mode projectile-mode flymake-hlint-load turn-on-haskell-doc-mode haskell-indentation-mode)))
+    (hlint-refactor-mode projectile-mode flymake-hlint-load turn-on-haskell-doc-mode haskell-indentation-mode)))
  '(haskell-process-path-ghci "/home/rogan/Groq/Haskell/runGhci.sh")
  '(haskell-process-prompt-restart-on-cabal-change nil)
  '(haskell-process-type (quote ghci))
  '(package-selected-packages
    (quote
-    (json-mode yaml-mode web-mode use-package undo-tree typo smart-mode-line rust-mode markdown-mode lua-mode jsx-mode js2-mode htmlize helm-projectile helm-company helm-ag go-mode gitignore-mode gitconfig-mode flymake-hlint edit-server dumb-jump dante clojure-mode auctex ag))))
+    (avy nix-mode json-mode yaml-mode web-mode use-package undo-tree typo transpose-frame smart-mode-line rust-mode markdown-mode lua-mode jsx-mode js2-mode htmlize helm-projectile helm-company helm-ag go-mode gitignore-mode gitconfig-mode flymake-hlint edit-server dumb-jump clojure-mode auctex ag))))
 
 ;; (with-eval-after-load 'haskell-mode-hook
 ;;   (define-key haskell-mode-map (kbd "<f8>") 'haskell-navigate-imports))
@@ -160,6 +162,10 @@
 (require 'hlint-refactor)
 (add-hook 'haskell-mode-hook 'hlint-refactor-mode)
 
+(use-package projectile
+   :ensure t
+   :bind-keymap (("C-c p" . projectile-command-map)))
+
 (projectile-global-mode)
 (setq projectile-completion-system 'helm)
 (helm-projectile-on)
@@ -177,6 +183,12 @@
 
 (add-hook 'haskell-mode-hook 'projectile-mode)
 
+;; Configure avy
+(use-package avy
+  :ensure t
+  :bind
+  ("M-s" . avy-goto-char))
+
 ;; (when (fboundp 'electric-indent-mode) (electric-indent-mode -1))
 ;; Disable electric-indent-mode, which is enabled by default in Emacs
 ;; 24.4, and is very annoying haskell-mode (e.g. it attempts to indent
@@ -186,9 +198,6 @@
 ;; Unicode symbols
 ;; (defvar haskell-font-lock-symbols)
 ;; (setq haskell-font-lock-symbols t)
-
-(require 'agda-input)
-(add-hook 'haskell-mode-hook (lambda () (set-input-method 'Agda)))
 
 ;; (require 'haskell-unicode-input-method)
 ;; (add-hook 'haskell-mode-hook
@@ -212,17 +221,23 @@
 ;; Load Jex files with json-mode:
 (setq auto-mode-alist (cons '("\\.jex" . json-mode) auto-mode-alist))
 
-;; ------------------------------------------------------------
-;; Agda
-
-;; (load-file (let ((coding-system-for-read 'utf-8))
-;;                (shell-command-to-string "agda-mode locate")))
+;; Load alan-assembly files with asm-mode:
+(require 'alan-assembly-mode)
+(setq auto-mode-alist (cons '("\\.aa" . alan-assembly-mode) auto-mode-alist))
 
 ;; ------------------------------------------------------------
 ;; Magit
 
 ;(setq magit-last-seen-setup-instructions "1.4.0")
 ;(global-set-key (kbd "\C-xm") 'magit-status)
+
+
+;; Set the smerge prefix to C-c m (was C-c ^)
+;;
+;;   `C-c m m` <-- keep "my" change.
+;;   `C-c m n` <-- next change.
+;;   `C-c m <ret>` <-- keep version cursor is on.
+(setq smerge-command-prefix "\C-cm")
 
 ;; ------------------------------------------------------------
 ;; Highlight things
