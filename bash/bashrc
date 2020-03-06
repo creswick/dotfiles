@@ -227,6 +227,7 @@ if tmux info &> /dev/null; then
 fi
 
 export PATH="$HOME/.cargo/bin:$PATH"
+export PATH=$HOME/gnubin:$PATH
 
 # If you have settings that are specific to certain machines, put them
 # in ~/.local_bashrc

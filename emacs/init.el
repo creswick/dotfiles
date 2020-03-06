@@ -8,9 +8,24 @@
       `(("." . ,(concat user-emacs-directory "backups"))))
 
 (require 'package)
-(add-to-list 'package-archives
-	     '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+(setq package-enable-at-startup nil)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 (package-initialize)
+
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(eval-when-compile
+  (require 'use-package))
+
+(require 'bind-key)
+
+;(add-to-list 'package-archives
+;	     '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+;(package-initialize)
 (require 'subr-x)
 
 ;; Speed startup
@@ -25,7 +40,7 @@
      haskell-mode
      json-mode
      js2-mode
-     jsx-mode
+;     jsx-mode
      web-mode
      markdown-mode
      lua-mode
@@ -217,13 +232,6 @@
 ;; all of its wonderful features!!
 (add-hook 'latex-mode-hook 'turn-on-reftex)
 (setq auto-mode-alist (cons '("\\.tex" . latex-mode) auto-mode-alist))
-
-;; Load Jex files with json-mode:
-(setq auto-mode-alist (cons '("\\.jex" . json-mode) auto-mode-alist))
-
-;; Load alan-assembly files with asm-mode:
-(require 'alan-assembly-mode)
-(setq auto-mode-alist (cons '("\\.aa" . alan-assembly-mode) auto-mode-alist))
 
 ;; ------------------------------------------------------------
 ;; Magit
