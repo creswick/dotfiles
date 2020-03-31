@@ -228,6 +228,19 @@ fi
 
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH=$HOME/gnubin:$PATH
+# Add the path to clangd
+export PATH=/opt/rh/llvm-toolset-7/root/usr/bin:$PATH
+# Add locally installed things:
+export PATH=$HOME/myapps/bin:$PATH
+export PATH=$HOME/downloads/bin:$PATH
+export PATH=$HOME/downloads/llvm-project/build/bin:$PATH
+
+
+# Use this to get access to the newer tools:
+# scl enable devtoolset-7
+
+
+export LD_LIBRARY_PATH=$HOME/myapps/lib:$LD_LIBRARY_PATH
 
 # If you have settings that are specific to certain machines, put them
 # in ~/.local_bashrc

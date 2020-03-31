@@ -10,7 +10,7 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 (package-initialize)
 
@@ -26,7 +26,7 @@
 ;(add-to-list 'package-archives
 ;	     '("melpa-stable" . "https://stable.melpa.org/packages/") t)
 ;(package-initialize)
-(require 'subr-x)
+; (require 'subr-x)
 
 ;; Speed startup
 (setq inhibit-startup-message t)
@@ -69,27 +69,57 @@
      smart-mode-line
      undo-tree
      edit-server
+     ;; cpp stuff
+     yasnippet
+     lsp-ui
+;     lsp-treemacs
+ ;    company-lsp
+;     which-key
      ;; nix
      nix-mode)
   "A list of packages to ensure are installed at launch.")
-
 (require 'cl)
 (require 'uniquify)
-
-;; Line numbers:
-(setq linum-format "%3d\u2502")
-
 (defun erc/packages-installed-p ()
   (loop for pkg in erc/packages
 	when (not (package-installed-p pkg)) do (return nil)
 	finally (return t)))
-
 (unless (erc/packages-installed-p)
   (message "%s" "Refreshing package database")
   (package-refresh-contents)
   (dolist (pkg erc/packages)
     (when (not (package-installed-p pkg))
             (package-install pkg))))
+
+
+(use-package lsp-mode
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  :init (setq lsp-keymap-prefix "C-c l")
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+         (c++-mode . lsp)
+         )
+         ;; if you want which-key integration
+;         (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
+
+;; optionally
+(use-package lsp-ui :commands lsp-ui-mode)
+(use-package company-lsp :commands company-lsp)
+;; if you are helm user
+; (use-package helm-lsp :commands helm-lsp-workspace-symbol)
+
+;; optionally if you want to use debugger
+;(use-package dap-mode)
+;; (use-package dap-LANGUAGE) to load the dap adapter for your language
+;(use-package dsp-c++)
+
+;; ;; optional if you want which-key integration
+;; (use-package which-key
+;;   :config
+;;   (which-key-mode))
+
+;; Line numbers:
+(setq linum-format "%3d\u2502")
 
 ;; ace-window:
 (global-set-key (kbd "M-o") 'ace-window)
