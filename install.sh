@@ -29,6 +29,7 @@ echo "Installing symlinks for bash"
 ln -s -f  "$DIR/bash/bash_logout" "$HOME/.bash_logout"
 ln -s -f "$DIR/bash/bashrc" "$HOME/.bashrc"
 ln -s -f "$DIR/bash/profile" "$HOME/.profile"
+ln -s -f "$DIR/bash/git-completion.bash" "$HOME/.git-completion.bash"
 
 echo "Installing 'protectSSH.sh' in $HOME/bin"
 mkdir -p "$HOME/bin"

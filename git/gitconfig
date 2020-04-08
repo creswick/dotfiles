@@ -12,3 +12,5 @@
         lol = log --oneline --graph
 [rerere]
         enabled = true
+[http]
+	sslVerify = true

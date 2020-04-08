@@ -226,6 +226,10 @@ if tmux info &> /dev/null; then
     tmux ls
 fi
 
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+fi
+
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH=$HOME/gnubin:$PATH
 # Add the path to clangd
