@@ -231,6 +231,18 @@ if [ -f ~/.git-completion.bash ]; then
 fi
 
 export PATH="$HOME/.cargo/bin:$PATH"
+
+
+# Homebrew has stopped supporting the '--default-names' flag, and each package puts binaries in a new, separate, gnubin dir.
+# We link them all to one place with the following script (that only needs to run once, hence it's commented out.)
+# See: https://discourse.brew.sh/t/why-was-with-default-names-removed/4405/16
+#
+# mkdir -p $HOME/gnubin
+# for gnuutil in /usr/local/opt/**/libexec/gnubin/*; do
+#    ln -s $gnuutil $HOME/gnubin/
+# done
+#
+# Add the new gnubin directory to our path:
 export PATH=$HOME/gnubin:$PATH
 # Add the path to clangd
 export PATH=/opt/rh/llvm-toolset-7/root/usr/bin:$PATH
